@@ -17,9 +17,9 @@ pip install -r requirements.txt
 ## deploy
 ```
 pip install -r requirements.txt -t lib
-gcloud app deploy --project=data-managers-search --version=v1 ./wells.yaml
+gcloud app deploy --project=<projectname> --version=v1 ./wells.yaml
 
 #browse to
-(service) https://guestbook-dot-<projectname>.appspot.com
+(service) https://wellservice-dot-<projectname>.appspot.com
 (default) https://<projectname>.appspot.com
 ```
