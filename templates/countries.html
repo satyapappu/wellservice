@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script>
+        //var address = 'https://capitalservice-dot-data-managers-search.appspot.com/';
+        var address = window.location.origin + '/';
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+    <title>Countries and Capitals</title>
+
+
+</head>
+<body>
+    <h1 class="h1center">Countries and Capitals</h1>
+
+    <div id="countryList-div" style="padding: 0;">
+        <table id="countryTable" border="0">
+            <tr>
+                <th>Country</th>
+                <th>Capital</th>
+            </tr>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+
+        function GetCountries()
+        {
+
+            var path = address + 'api/sortedlist';
+            var jqxhr = $.get(path,
+                function (rawdata, status)
+                {
+                    rawdata.sort(SortByName);
+
+                    var data = [];
+                    $.each(rawdata, function (index, item)
+                    {
+                        var items = $.grep(data, function (e)
+                        {
+                            return item.country === e.country;
+                        });
+                        if (items.length === 0)
+                        {
+                            data.push(item);
+                        }
+                    });
+                    $('#countryTable tr').not(':first').not(':last').remove();
+                    var html = '';
+                    data.forEach(function (item)
+                    {
+                        //alert(data.country)
+                        html += '<tr><td>' + item.country +
+                                '</td><td>' + item.name + '</td></tr>';
+                    });
+                    $('#countryTable tr').first().after(html);
+
+                },
+                'json');
+        }
+
+        function SortByName(a, b)
+        {
+            var aName = a.country.toLowerCase();
+            var bName = b.country.toLowerCase();
+            return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+        }
+
+        GetCountries();
+    </script>
+</body>
+</html>

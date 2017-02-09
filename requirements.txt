@@ -1,0 +1,5 @@
+flask
+flask-cors
+oauth2client==2.0.0
+google-cloud
+google-api-python-client==1.5.5

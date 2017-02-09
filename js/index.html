@@ -1,0 +1,127 @@
+<!doctype html>
+
+<html>
+<head>
+  <title>CapitalServiceTeam16UI</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="bower_components/google-map/google-map.html">
+
+  <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+  <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+  <!-- <link rel="import" href="bower_components/font-roboto/roboto.html"> -->
+  <link rel="import" href="bower_components/paper-button/paper-button.html">
+  <link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="import" href="bower_components/paper-fab/paper-fab.html">
+  <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+  <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+  <link rel="import" href="bower_components/app-layout/app-layout.html">
+  <link rel="import" href="bower_components/polymer/polymer.html">
+  <link rel="import" href="bower_components/iron-image/iron-image.html">
+  <link rel="import" href="bower_components/iron-pages/iron-pages.html">
+  <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
+  <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
+  <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="bower_components/iron-label/iron-label.html">
+  <link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="import" href="country-details.html">
+  
+  <style>
+  google-map {
+    height: 300px;
+    width: 100%;
+  }
+  </style>
+
+</head>
+
+<body unresolved>
+  
+<!-- start of maps-->
+
+<!-- end of maps-->
+                    <google-map latitude="-25.363" longitude="131.044"  api-key="AIzaSyB6D39YxZWnxU2XYK-SkXWSBgkXoxg36vE" zoom="1">
+                     <google-map-marker latitude="{{countryLocation.latitude}}" longitude="{{countryLocation.longitude}}" draggable="false" title="test">
+                     </google-map-marker>
+                     </google-map>
+
+  <capital-service></capital-service>
+
+
+
+</body>
+
+<!--dashboard-->
+
+    <dom-module id="capital-service">
+        <template>
+            <paper-header-panel class="main-wrapper">
+                <paper-toolbar class="toolbar1">
+                    <!--iron-image style="width:100px;height:50px;" sizing="contain"src=  "./images/Schlum_logo_white.png"></iron-image-->
+                    <span class="title">Team 10000 - Capital Service</span>
+                </paper-toolbar>
+                <iron-ajax id="capitals"
+                                   verbose="true"
+                                   auto
+                                   method="GET"
+                                   url="https://capitalservice-dot-data-managers-search.appspot.com/api/sortedlist"
+                                   last-response="{{capitals}}"
+                                   on-error="handleError"
+                                   on-response="gotResults"
+                                   debounce-duration="300">
+           </iron-ajax>
+                <template is="dom-repeat" items="{{capitals}}">
+                    <country-details
+                                capital-name="{{item.name}}"
+                                country-code="{{item.countryCode}}"
+                                country-name="{{item.country}}"
+                                country-id="{{item.id}}"
+                                access-token="{{access_token}}"
+                                country-location="{{item.location}}"
+                                country-continent="{{item.continent}}"
+                        ></country-details>
+                </template>
+            </paper-header-panel>
+        </template>
+    </dom-module>
+    <script>
+    addEventListener('WebComponentsReady', function() {
+        Polymer({
+            is: "capital-service",
+            properties: {
+                userEmail: String,
+                access_token: String,
+                capitals: Array
+            },
+            publish: {
+                projectId: 'data-managers-search',
+
+            },
+            gotResults: function (data) {
+                regs = data.detail.response.items; // for debugging
+            },
+            handleError: function (event, request) {
+                var re = event.detail.request.xhr.response;
+                console.log("registration error:");
+                console.log(request);
+            },
+
+        });// end polymer function
+    });
+
+</script>
+
+
+
+<!--end of dashboard-->
+
+
+
+</html>
