@@ -9,7 +9,7 @@ def publish(uwi, topicName):
     logging.info('Publishing message {} to topic {}.'.format(id, topicName))
     #print('Publishing message {} to topic {}.'.format(id, topicName))
 
-    ds = datastore.Client(project="data-managers-search")
+    ds = datastore.Client(project="cds-dev-155819")
     kind = "SPWells"
 
     query = ds.query(kind=kind)

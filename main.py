@@ -11,7 +11,7 @@ from google.cloud import pubsub
 
 app = Flask(__name__)
 
-globalproject = "data-managers-search"
+globalproject = "cds-dev-155819"
 wellKind = "SPWells"
 
 def __init__(self):
@@ -310,7 +310,7 @@ def get_notification():
 def pull_notification():
     pubsub_client_publisher = pubsub.Client("data-managers-search")
     topic = pubsub_client_publisher.topic("sp-wells-topic")
-    pubsub_client_receiver = pubsub.Client("data-managers-search")
+    pubsub_client_receiver = pubsub.Client("cds-dev-155819")
     subscription = pubsub.subscription.Subscription("sp-test-subscription", topic)
 
     if not subscription.exists():

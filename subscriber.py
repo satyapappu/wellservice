@@ -5,7 +5,7 @@ from inspect import getmembers
 def subscribe():
     pubsub_client_publisher = pubsub.Client("data-managers-search")
     topic = pubsub_client_publisher.topic("sp-wells-topic")
-    pubsub_client_receiver = pubsub.Client("data-managers-search")
+    pubsub_client_receiver = pubsub.Client("cds-dev-155819")
 
     subscriptions = pubsub_client_receiver.list_subscriptions()
     for sub1 in subscriptions:
